@@ -22,7 +22,7 @@ module.exports = function(RED) {
 				const headers = { Authorization: 'Bearer ' + access_token, "Content-Type": 'application/json' };
             
                 axios.post(url, postData, { headers }).then(response => {
-					node.warn(user_name + ' (id: ' + userID + 'was added to ' + groupName + ' (id: ' + groupID + ')');
+					node.warn(user_name + ' (id: ' + userID + ') was added to ' + groupName + ' (id: ' + groupID + ')');
 					node.send(msg);
                 }).catch(error => {
                     node.warn(error);

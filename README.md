@@ -56,7 +56,7 @@ The node returns the original `msg` object without modifying it and prints a mes
 
 ## Usage
 
-1. Install the Node-Red-Azure-nodes package using npm: npm i node-red-azure-nodes
+1. Install the node-red-azure-nodes package using npm: npm i node-red-azure-nodes
 
 2. In your Node-RED flow, you will find the Azure nodes under the "Authomize Azure" category in the Node-RED palette.
 

@@ -17,7 +17,7 @@ module.exports = function(RED) {
             
 			try {
                 axios.delete(url, { headers }).then(response => {
-					node.warn(user_name + ' (id: ' + userID + 'was removed from ' + groupName + ' (id: ' + groupID + ')');
+					node.warn(user_name + ' (id: ' + userID + ') was removed from ' + groupName + ' (id: ' + groupID + ')');
 					node.send(msg);
                 }).catch(error => {
                     node.warn(error);

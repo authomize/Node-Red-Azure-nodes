@@ -11,9 +11,9 @@ module.exports = function(RED) {
                 Object.keys(x).reduce((p, c) => p + `&${c}=${encodeURIComponent(x[c])}`, '');
 
             try {
-				const clientId = msg.config.Azure.clientId;
-				const clientSecret = msg.config.Azure.clientSecret;
-				const tenantId = msg.config.Azure.tenantId;
+				const clientId = msg.config.clientId;
+				const clientSecret = msg.config.clientSecret;
+				const tenantId = msg.config.tenantId;
 
 				const tokenEndpoint = 'https://login.microsoftonline.com/' + tenantId + '/oauth2/v2.0/token';
 				const bodyFormData = {

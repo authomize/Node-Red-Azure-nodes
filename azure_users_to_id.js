@@ -15,7 +15,8 @@ module.exports = function(RED) {
                	const usersId = [];
 
 				for (const email of emails) {
-					var searchURL = 'https://graph.microsoft.com/v1.0/users?$filter=mail%20eq%20%27' + email + '%27';
+					var searchURL = 'https://graph.microsoft.com/v1.0/users?$filter=mail%20eq%20%27' + email + '%27%20or%20userPrincipalName%20eq%20%27' + email + '%27';
+					
 					const response = await axios.get(searchURL, {
 						headers: {
 						  Authorization: 'Bearer ' + access_token

@@ -25,6 +25,7 @@ module.exports = function(RED) {
 					node.warn(user_name + ' (id: ' + userID + ') was added to ' + groupName + ' (id: ' + groupID + ')');
 					node.send(msg);
                 }).catch(error => {
+					node.warn('!!!!!!!!!!!!!!!!!!!!' + user_name + ' (id: ' + userID + ') was NOT added to ' + groupName + ' (id: ' + groupID + ')');
                     node.warn(error);
                     node.warn(error.message);
                 });

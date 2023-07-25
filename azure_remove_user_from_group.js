@@ -20,7 +20,8 @@ module.exports = function(RED) {
 					node.warn(user_name + ' (id: ' + userID + ') was removed from ' + groupName + ' (id: ' + groupID + ')');
 					node.send(msg);
                 }).catch(error => {
-                    node.warn(error);
+                    node.warn('!!!!!!!!!!!!!!!!!!!!' + user_name + ' (id: ' + userID + ') was NOT removed from ' + groupName + ' (id: ' + groupID + ')');
+					node.warn(error);
                     node.warn(error.message);
                 });
             } catch (error) {

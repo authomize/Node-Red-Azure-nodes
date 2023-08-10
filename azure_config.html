@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    RED.nodes.registerType('azure-config', {
+      category: 'config',
+      defaults: {
+        name: { value: '' },
+      },
+      credentials: {
+        tenantId: { type: 'text', required: true },
+        clientId: { type: 'text', required: true },
+        clientSecret: { type: 'text', required: true }
+      },
+      label: function () {
+        return this.name || 'Azure Config';
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="azure-config">
+    <div class="form-row">
+      <label for="node-config-input-name">
+        <i class="fa fa-tag"></i> Name
+      </label>
+      <input type="text" id="node-config-input-name" placeholder="Configuration node name" />
+    </div>
+    
+    <div class="form-row">
+      <label for="node-config-input-tenantId">
+        <i class="fa fa-key"></i> Tenant Id
+      </label>
+      <input type="text" id="node-config-input-tenantId" placeholder="Enter your Tenant Id" />
+    </div>
+
+      <div class="form-row">
+        <label for="node-config-input-clientId">
+          <i class="fa fa-key"></i> Client Id
+        </label>
+        <input type="text" id="node-config-input-clientId" placeholder="Enter your Client Id" />
+      </div>
+
+      <div class="form-row">
+        <label for="node-config-input-clientSecret">
+          <i class="fa fa-key"></i> Client Secret
+        </label>
+        <input type="text" id="node-config-input-clientSecret" placeholder="Enter your Client Secret" />
+      </div>
+  </script>
+  
+  <script type="text/x-red" data-help-name="azure-config">
+    <p>A configuration node for Azure Ad integration.</p>
+    <p>Enter required data for integration: Tenant Id, Client Secret, Client Id</p>
+  </script>
+  

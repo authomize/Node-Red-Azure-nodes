@@ -5,9 +5,17 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
 
+		node.auth = RED.nodes.getNode(config.auth);
+
         node.on('input', async function(msg) {
+			if (!node.auth || !node.auth.has_credentials) {
+				node.error("auth configuration is missing");
+				return
+			}
+
+			const access_token = await node.auth.get_access_token();
+
 			try {
-				const access_token = msg.access_token;
 				const userID = msg.usersId[0];
 				const user_name = msg.emails[0];
 

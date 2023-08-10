@@ -19,7 +19,7 @@
 	  "azure_reset_user_password": "azure_reset_user_password.js",
 	  "azure_remove_user_from_app": "azure_remove_user_from_app.js",
 	  "azure_disable_user": "azure_disable_user.js",
-    "azure_config": "azure-config.js"
+    "azure-config": "azure_config.js"
     }
   }
 }

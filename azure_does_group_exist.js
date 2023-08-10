@@ -14,7 +14,10 @@ module.exports = function(RED) {
 				return
 			}
 
-			const groupName = msg.group_name;
+			const groupName = RED.util.evaluateNodeProperty(
+				config.groupName, config.groupNameType, node, msg
+			)
+
 			const access_token = await node.auth.get_access_token();
 
             try {

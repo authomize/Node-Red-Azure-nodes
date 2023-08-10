@@ -5,13 +5,38 @@
         defaults: {
             name: {value:"Azure - Remove user from app"},
             auth: { type: 'azure_config', required: true },
+            appObjectId: { value: '', required: true },
+            appObjectIdType: {value: ''},
+            principalId: { value: '', required: true },
+            principalIdType: {value: ''},
+            appRoleAssignedToId: { value: '', required: true },
+            appRoleAssignedToIdType: {value: ''},
         },
         inputs:3,
         outputs:1,
         icon: "file.png",
         label: function() {
             return this.name||"azure_remove_user_from_app";
-        }
+        },
+        oneditprepare: function () {
+            $("#node-input-appObjectId").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-appObjectIdType"
+            });
+
+            $("#node-input-principalId").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-principalIdType"
+            });
+
+            $("#node-input-appRoleAssignedToId").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-appRoleAssignedToIdType"
+            });
+        },
     });
 </script>
 
@@ -24,6 +49,27 @@
         <label for="node-input-auth"><i class="fa fa-cogs"></i> AzureAD Credentials</label>
         <input type="text" id="node-input-auth" placeholder="auth">
     </div>
+    <div class="form-row">
+        <label for="node-input-appObjectId">
+          <i class="fa fa-user"></i> App Object Id
+        </label>
+        <input type="text" id="node-input-appObjectId" placeholder="Enter the azure app object id">
+        <input type="hidden" id="node-input-appObjectIdType" />
+      </div>
+      <div class="form-row">
+        <label for="node-input-principalId">
+          <i class="fa fa-user"></i> principal Id
+        </label>
+        <input type="text" id="node-input-principalId" placeholder="Enter the principle id">
+        <input type="hidden" id="node-input-principalIdType" />
+      </div>
+      <div class="form-row">
+        <label for="node-input-appRoleAssignedToId">
+          <i class="fa fa-user"></i> App Role Id
+        </label>
+        <input type="text" id="node-input-appRoleAssignedToId" placeholder="Enter the app role id">
+        <input type="hidden" id="node-input-appRoleAssignedToIdType" />
+      </div>
 </script>
 
 <script type="text/html" data-help-name="azure_remove_user_from_app">

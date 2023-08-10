@@ -16,15 +16,16 @@ module.exports = function(RED) {
 			const access_token = await node.auth.get_access_token();
 
 			try {
-				const userID = msg.usersId[0];
-				const user_name = msg.emails[0];
+				const userId = RED.util.evaluateNodeProperty(
+					config.userId, config.userIdType, node, msg
+				)
 
-				const url = 'https://graph.microsoft.com/v1.0/users/' + userID;
+				const url = 'https://graph.microsoft.com/v1.0/users/' + userId;
 				const headers = { Authorization: 'Bearer ' + access_token, "Content-Type": 'application/json' };
 				const data = {accountEnabled: false};
 
-				const response = await axios.patch(url, data, { headers });
-				node.warn(user_name + ' (id: ' + userID + ') was disabled');
+				await axios.patch(url, data, { headers });
+				node.warn(userId + ' was disabled');
 				node.send(msg);
             } catch (error) {
                 node.warn(error);

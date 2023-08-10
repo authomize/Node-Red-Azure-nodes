@@ -16,25 +16,20 @@ module.exports = function (RED) {
       const access_token = await node.auth.get_access_token();
 
       const headers = { Authorization: 'Bearer ' + access_token, 'Content-Type': 'application/json' };
-      var app_object_ID = '';
-      var principalId = '';
-      var appRoleAssignedToId = '';
-      var appName = '';
-      var user_name = '';
 
-      if (msg.payload.data.entities[0].object === 'asset') {
-        app_object_ID = msg.payload.data.entities[0].originId;
-        appName = msg.payload.data.entities[0].name;
-        principalId = msg.payload.data.entities[1].originId;
-        user_name = msg.payload.data.entities[1].name;
-      } else {
-        app_object_ID = msg.payload.data.entities[1].originId;
-        appName = msg.payload.data.entities[1].name;
-        principalId = msg.payload.data.entities[0].originId;
-        user_name = msg.payload.data.entities[0].name;
-      }
+      const appObjectId = RED.util.evaluateNodeProperty(
+				config.appObjectId, config.appObjectIdType, node, msg
+			  )
 
-      var url = 'https://graph.microsoft.com/v1.0/servicePrincipals/' + app_object_ID + '/appRoleAssignedTo/';
+      const principalId = RED.util.evaluateNodeProperty(
+				config.principalId, config.principalIdType, node, msg
+			  )
+		
+			  const appRoleAssignedToId = RED.util.evaluateNodeProperty(
+				config.appRoleAssignedToId, config.appRoleAssignedToIdType, node, msg
+			  )
+
+      var url = 'https://graph.microsoft.com/v1.0/servicePrincipals/' + appObjectId + '/appRoleAssignedTo/';
       try {
         axios.get(url, { headers })
           .then(response => {
@@ -46,15 +41,15 @@ module.exports = function (RED) {
               }
             }
 
-            var url_delete = 'https://graph.microsoft.com/v1.0/servicePrincipals/' + app_object_ID + '/appRoleAssignedTo/' + appRoleAssignedToId;
+            var url_delete = 'https://graph.microsoft.com/v1.0/servicePrincipals/' + appObjectId + '/appRoleAssignedTo/' + appRoleAssignedToId;
             try {
               axios.delete(url_delete, { headers })
                 .then(response => {
                   node.send(msg);
-				  node.warn(user_name + ' (id: ' + principalId + ') was removed from ' + appName + ' (id: ' + app_object_ID + ')');
+				          node.warn(principalId + ' was removed from ' + appObjectId);
                 })
                 .catch(error => {
-				  node.warn('!!!!!!!!!!!!!!!!!!!!' + user_name + ' (id: ' + principalId + ') was NOT removed from ' + appName + ' (id: ' + app_object_ID + ')');
+				          node.warn('!!!!!!!!!!!!!!!!!!!!' + principalId + ' was NOT removed from ' + appObjectId);
                   node.warn(error);
                   node.warn(error.message);
                 });

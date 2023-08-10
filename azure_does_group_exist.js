@@ -5,12 +5,18 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
         var results = [];
-        var access_token = '';
         
+		node.auth = RED.nodes.getNode(config.auth);
+
         node.on('input', async function(msg) {
-            const access_token = msg.access_token;
+			if (!node.auth || !node.auth.has_credentials) {
+				node.error("auth configuration is missing");
+				return
+			}
+
 			const groupName = msg.group_name;
-			
+			const access_token = await node.auth.get_access_token();
+
             try {
 				var searchURL = 'https://graph.microsoft.com/v1.0/groups/?$filter=displayName%20eq%20%27' + encodeURIComponent(groupName) + '%27';
 				const response = await axios.get(searchURL, {

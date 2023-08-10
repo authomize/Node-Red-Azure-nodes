@@ -4,11 +4,19 @@ module.exports = function(RED) {
     function azure_create_group(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+        node.auth = RED.nodes.getNode(config.auth);
+        
         node.on('input', async function(msg) {
+
+            if (!node.auth || !node.auth.has_credentials) {
+				node.error("auth configuration is missing");
+				return
+			}
+
+			const access_token = await node.auth.get_access_token();
 
             const groupName = msg.group_name;
             const group_desc = msg.group_desc;
-            const access_token = msg.access_token;
             const headers = {Authorization: 'Bearer ' + access_token, "Content-Type": 'application/json' };
             const url = 'https://graph.microsoft.com/v1.0/groups';
 

@@ -10,16 +10,15 @@
   "node-red" : {
     "nodes": {
       "azure_users_to_id": "azure_users_to_id.js",
-	  "azure_create_group": "azure_create_group.js",
-	  "azure_get_access_token": "azure_get_access_token.js",
-	  "azure_does_group_exist": "azure_does_group_exist.js",
-	  "azure_add_user_to_group": "azure_add_user_to_group.js",
-	  "azure_remove_user_from_group": "azure_remove_user_from_group.js",
-	  "azure_is_user_in_group": "azure_is_user_in_group.js",
-	  "azure_reset_user_password": "azure_reset_user_password.js",
-	  "azure_remove_user_from_app": "azure_remove_user_from_app.js",
-	  "azure_disable_user": "azure_disable_user.js",
-    "azure_config": "azure_config.js"
+      "azure_create_group": "azure_create_group.js",
+      "azure_does_group_exist": "azure_does_group_exist.js",
+      "azure_add_user_to_group": "azure_add_user_to_group.js",
+      "azure_remove_user_from_group": "azure_remove_user_from_group.js",
+      "azure_is_user_in_group": "azure_is_user_in_group.js",
+      "azure_reset_user_password": "azure_reset_user_password.js",
+      "azure_remove_user_from_app": "azure_remove_user_from_app.js",
+      "azure_disable_user": "azure_disable_user.js",
+      "azure_config": "azure_config.js"
     }
   }
 }

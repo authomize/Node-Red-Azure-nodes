@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('azure-config', {
+    RED.nodes.registerType('azure_config', {
       category: 'config',
       defaults: {
         name: { value: '' },
@@ -10,12 +10,12 @@
         clientSecret: { type: 'text', required: true }
       },
       label: function () {
-        return this.name || 'Azure Config';
+        return this.name || 'Azure AD Config';
       },
     });
   </script>
   
-  <script type="text/html" data-template-name="azure-config">
+  <script type="text/html" data-template-name="azure_config">
     <div class="form-row">
       <label for="node-config-input-name">
         <i class="fa fa-tag"></i> Name
@@ -45,7 +45,7 @@
       </div>
   </script>
   
-  <script type="text/x-red" data-help-name="azure-config">
+  <script type="text/x-red" data-help-name="azure_config">
     <p>A configuration node for Azure Ad integration.</p>
     <p>Enter required data for integration: Tenant Id, Client Secret, Client Id</p>
   </script>

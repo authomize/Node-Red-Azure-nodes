@@ -1,7 +1,8 @@
+const axios = require("axios");
+
 module.exports = function (RED) {
-  async function AzureAdConfigNode(config) {
+  function AzureAdConfigNode(config) {
     RED.nodes.createNode(this, config);
-    const node = this;
 
     // Validate if the required JSON field is present
     if (!this.credentials || !this.credentials.tenantId) {
@@ -20,11 +21,13 @@ module.exports = function (RED) {
     }
 
     this.name = config.name;
-    this.has_credentials = (
-        this.credentials.tenantId && this.credentials.clientId && this.credentials.clientSecret
-    )
+    this.tenantId = config.tenantId;
+    this.clientId = config.clientId;
+    this.clientSecret = config.clientSecret;
 
-    this.get_access_token = async () => {
+    this.has_credentials = this.tenantId && this.clientId && this.clientSecret;
+
+    async function generateToken() {
       const formUrlEncoded = (x) =>
         Object.keys(x).reduce(
           (p, c) => p + `&${c}=${encodeURIComponent(x[c])}`,
@@ -32,9 +35,9 @@ module.exports = function (RED) {
         );
 
       try {
-        const clientId = config.clientId;
-        const clientSecret = config.clientSecret;
-        const tenantId = config.tenantId;
+        const clientId = this.tenantId;
+        const clientSecret = this.clientSecret;
+        const tenantId = this.tenantId;
 
         const tokenEndpoint =
           "https://login.microsoftonline.com/" +
@@ -55,12 +58,14 @@ module.exports = function (RED) {
 
         return response.data.access_token;
       } catch (error) {
-        node.warn(error);
+        console.error(error);
       }
     };
+
+    this.get_access_token = generateToken;
   }
 
-  RED.nodes.registerType("azure-config", AzureAdConfigNode, {
+  RED.nodes.registerType("azure_config", AzureAdConfigNode, {
     credentials: {
       tenantId: { type: "text" },
       clientId: { type: "text" },

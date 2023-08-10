@@ -3,7 +3,8 @@
         category: 'authomize_azure',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            auth: { type: 'azure_config', required: true },
          },
         inputs: 1,
         outputs: 2,
@@ -17,6 +18,10 @@
     <div class="form-row">
                 <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
                 <input type="text" id="node-input-name" placeholder="Name">
+        </div>
+        <div class="form-row">
+            <label for="node-input-auth"><i class="fa fa-cogs"></i> AzureAD Credentials</label>
+            <input type="text" id="node-input-auth" placeholder="auth">
         </div>
 </script>
 

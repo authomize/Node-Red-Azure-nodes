@@ -4,9 +4,17 @@ module.exports = function(RED) {
     function azure_remove_user_from_group_Node(config) {
         RED.nodes.createNode(this, config);
         var node = this;
+
+        node.auth = RED.nodes.getNode(config.auth);
        
         node.on('input', async function(msg) {
-            const access_token = msg.access_token;
+            if (!node.auth || !node.auth.has_credentials) {
+				node.error("auth configuration is missing");
+				return
+			}
+
+			const access_token = await node.auth.get_access_token();
+
             const groupID = msg.groupID;
             const userID = msg.usersId[0];
 			const user_name = msg.emails[0];

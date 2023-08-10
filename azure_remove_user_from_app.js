@@ -5,8 +5,16 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     var node = this;
 
+    node.auth = RED.nodes.getNode(config.auth);
+
     node.on('input', async function (msg) {
-      const access_token = msg.access_token;
+      if (!node.auth || !node.auth.has_credentials) {
+				node.error("auth configuration is missing");
+				return
+			}
+
+      const access_token = await node.auth.get_access_token();
+
       const headers = { Authorization: 'Bearer ' + access_token, 'Content-Type': 'application/json' };
       var app_object_ID = '';
       var principalId = '';

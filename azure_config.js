@@ -21,9 +21,9 @@ module.exports = function (RED) {
     }
 
     this.name = config.name;
-    this.tenantId = config.tenantId;
-    this.clientId = config.clientId;
-    this.clientSecret = config.clientSecret;
+    this.tenantId = this.credentials.tenantId;
+    this.clientId = this.credentials.clientId;
+    this.clientSecret = this.credentials.clientSecret;
 
     this.has_credentials = this.tenantId && this.clientId && this.clientSecret;
 
@@ -35,7 +35,7 @@ module.exports = function (RED) {
         );
 
       try {
-        const clientId = this.tenantId;
+        const clientId = this.clientId;
         const clientSecret = this.clientSecret;
         const tenantId = this.tenantId;
 

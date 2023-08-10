@@ -6,7 +6,7 @@ module.exports = function(RED) {
         var node = this;
         var results = [];
         node.auth = RED.nodes.getNode(config.auth);
-        
+
         node.on('input', async function(msg) {
             if (!node.auth || !node.auth.has_credentials) {
 				node.error("auth configuration is missing");

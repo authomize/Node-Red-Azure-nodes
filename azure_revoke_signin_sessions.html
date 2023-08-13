@@ -1,17 +1,17 @@
 <script type="text/javascript">
-    RED.nodes.registerType('azure_create_group',{
+    RED.nodes.registerType('azure_revoke_signin_sessions',{
         category: 'authomize_azure',
         color: '#a6bbcf',
         defaults: {
-            name: {value: "Azure - Create group"},
+            name: {value: "Azure - Revoke Sign In Sessions"},
             auth: { type: 'azure_config', required: true },
         },
-        inputs:2,
+        inputs:1,
         outputs:1,
     });
 </script>
 
-<script type="text/html" data-template-name="azure_create_group">
+<script type="text/html" data-template-name="azure_revoke_signin_sessions">
     <div class="form-row">
                 <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
                 <input type="text" id="node-input-name" placeholder="Name">
@@ -22,6 +22,6 @@
         </div>
 </script>
 
-<script type="text/html" data-help-name="azure_create_group">
-        <p>Creates a group in Azure with provided nams and description</p>
+<script type="text/html" data-help-name="azure_revoke_signin_sessions">
+        <p>Revokes sign in session for a specific user</p>
 </script>

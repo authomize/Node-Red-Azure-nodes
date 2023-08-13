@@ -12,7 +12,19 @@
         },
         inputs:1,
         outputs:1,
-    });
+		oneditprepare: function () {
+            $("#node-input-userID").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-userIDType"
+            });
+
+            $("#node-input-userName").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-userNameType"
+            });
+        }    });
 </script>
 
 <script type="text/html" data-template-name="azure_revoke_signin_sessions">
@@ -25,17 +37,17 @@
             <input type="text" id="node-input-auth" placeholder="auth">
         </div>
 		<div class="form-row">
-          <label for="node-input-userId">
+          <label for="node-input-userID">
             <i class="fa fa-user"></i> User Id
           </label>
-          <input type="text" id="node-input-userId" placeholder="Enter Azure AD user id">
-          <input type="hidden" id="node-input-userIdType" />
+          <input type="text" id="node-input-userID" placeholder="Enter Azure AD user id">
+          <input type="hidden" id="node-input-userIDType" />
         </div>
 		<div class="form-row">
           <label for="node-input-userName">
             <i class="fa fa-user"></i> User Name
           </label>
-          <input type="text" id="node-input-userId" placeholder="Enter Azure AD user name">
+          <input type="text" id="node-input-userName" placeholder="Enter Azure AD user name">
           <input type="hidden" id="node-input-userNameType" />
         </div>
 </script>

@@ -5,13 +5,30 @@
         defaults: {
             name: {value:"Azure - Is user in group"},
             auth: { type: 'azure_config', required: true },
+            userId: { value: '', required: true },
+            userIdType: {value: ''},
+            groupId: { value: '', required: true },
+            groupIdType: {value: ''},
          },
         inputs: 1,
         outputs: 2,
         icon: "switch.png",
         label: function() {
             return this.name || "azure_is_user_in_group";
-        }
+        },
+        oneditprepare: function () {
+            $("#node-input-userId").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-userIdType"
+            });
+
+            $("#node-input-groupId").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-groupIdType"
+            });
+        },
     });
 </script>
 <script type="text/html" data-template-name="azure_is_user_in_group">
@@ -23,6 +40,21 @@
             <label for="node-input-auth"><i class="fa fa-cogs"></i> AzureAD Credentials</label>
             <input type="text" id="node-input-auth" placeholder="auth">
         </div>
+        <div class="form-row">
+            <label for="node-input-groupId">
+              <i class="fa fa-group"></i> Group Id
+            </label>
+            <input type="text" id="node-input-groupId" placeholder="Enter the group id">
+            <input type="hidden" id="node-input-groupIdType" />
+          </div>
+        
+          <div class="form-row">
+              <label for="node-input-userId">
+                <i class="fa fa-user"></i> User Id
+              </label>
+              <input type="text" id="node-input-userId" placeholder="Enter Azure AD user id">
+              <input type="hidden" id="node-input-userIdType" />
+            </div>
 </script>
 
 <script type="text/html" data-help-name="azure_is_user_in_group">

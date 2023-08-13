@@ -5,13 +5,22 @@
         defaults: {
             name: {value:""},
             auth: { type: 'azure_config', required: true },
+            groupName: { value: '', required: true },
+            groupNameType: {value: ''},
          },
         inputs: 1,
         outputs: 2,
         icon: "switch.png",
         label: function() {
             return this.name || "azure_does_group_exist";
-        }
+        },
+        oneditprepare: function () {
+            $("#node-input-groupName").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "str"],
+                typeField: "#node-input-groupNameType"
+            });
+        },
     });
 </script>
 <script type="text/html" data-template-name="azure_does_group_exist">
@@ -23,8 +32,16 @@
             <label for="node-input-auth"><i class="fa fa-cogs"></i> AzureAD Credentials</label>
             <input type="text" id="node-input-auth" placeholder="auth">
         </div>
+        <div class="form-row">
+            <label for="node-input-groupName">
+              <i class="fa fa-user"></i> Group Name
+            </label>
+            <input type="text" id="node-input-groupName" placeholder="Enter the group name">
+            <input type="hidden" id="node-input-groupNameType" />
+          </div>
 </script>
 
 <script type="text/html" data-help-name="azure_does_group_exist">
-        <p>Checks if a group exists in Okta</p>
+        <p>Checks if a group exists in Azure AD</p>
+        <p>Returns the group id as msg.groupId</p>
 </script>

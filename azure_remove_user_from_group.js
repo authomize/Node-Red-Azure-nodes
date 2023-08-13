@@ -15,20 +15,23 @@ module.exports = function(RED) {
 
 			const access_token = await node.auth.get_access_token();
 
-            const groupID = msg.groupID;
-            const userID = msg.usersId[0];
-			const user_name = msg.emails[0];
-			const groupName = msg.group_name;
+            const groupId = RED.util.evaluateNodeProperty(
+				config.groupId, config.groupIdType, node, msg
+			  )
+		
+			  const userId = RED.util.evaluateNodeProperty(
+				config.userId, config.userIdType, node, msg
+			  )
 			
-			var url = 'https://graph.microsoft.com/v1.0/groups/' + groupID + '/members/' + userID + '/$ref';
+			var url = 'https://graph.microsoft.com/v1.0/groups/' + groupId + '/members/' + userId + '/$ref';
             const headers = { Authorization: 'Bearer ' + access_token, "Content-Type": 'application/json' };
             
 			try {
                 axios.delete(url, { headers }).then(response => {
-					node.warn(user_name + ' (id: ' + userID + ') was removed from ' + groupName + ' (id: ' + groupID + ')');
+					node.warn(' user id: ' + userId + ' was removed from group Id ' + groupId);
 					node.send(msg);
                 }).catch(error => {
-                    node.warn('!!!!!!!!!!!!!!!!!!!!' + user_name + ' (id: ' + userID + ') was NOT removed from ' + groupName + ' (id: ' + groupID + ')');
+                    node.warn('!!!!!!!!! user id: ' + userId + ' was NOT removed from group Id ' + groupId);
 					node.warn(error);
                     node.warn(error.message);
                 });

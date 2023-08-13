@@ -4,7 +4,6 @@ module.exports = function(RED) {
     function azure_is_user_in_group_Node(config) {
         RED.nodes.createNode(this, config);
         var node = this;
-        var results = [];
         node.auth = RED.nodes.getNode(config.auth);
         
         node.on('input', async function(msg) {
@@ -13,15 +12,18 @@ module.exports = function(RED) {
 				return
 			}
 
-			const groupId = msg.groupID;
-			const groupName = msg.group_name;
-			const user_id = msg.userIds[0];
-			const user_name = msg.emails[0];
-
 			const access_token = await node.auth.get_access_token();
+
+			const groupId = RED.util.evaluateNodeProperty(
+				config.groupId, config.groupIdType, node, msg
+			  )
+		
+			  const userId = RED.util.evaluateNodeProperty(
+				config.userId, config.userIdType, node, msg
+			  )
 			
             try {
-				const url = 'https://graph.microsoft.com/v1.0/users/' + user_id + '/memberOf';
+				const url = `https://graph.microsoft.com/v1.0/users/${userId}/memberOf`;
 				const headers = {Authorization: 'Bearer ' + access_token};
 				const response = await axios.get(url, { headers });
 
@@ -32,7 +34,7 @@ module.exports = function(RED) {
 				if (isMember) {
 					node.send([msg, null]);
 				} else {
-					throw new Error(user_name + ' (id: ' + user_id + ') is not a member of: ' + groupName);
+					throw new Error(user_id + ' is not a member of: ' + groupId);
 					node.send([null, msg])
 				}
             } catch (error) {

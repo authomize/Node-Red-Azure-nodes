@@ -14,9 +14,14 @@ module.exports = function(RED) {
 			}
 
 			const access_token = await node.auth.get_access_token();
-			const userID = msg.payload.data.entities[0].originId;
-			const user_name = msg.payload.data.entities[0].email;
-            
+			
+			const userID = RED.util.evaluateNodeProperty(
+				config.userID, config.userIDType, node, msg
+			)
+			const userName = RED.util.evaluateNodeProperty(
+				config.userName, config.userNameType, node, msg
+			)
+			
 			const headers = {Authorization: 'Bearer ' + access_token, "Content-Type": 'application/json' };
             const url = "https://graph.microsoft.com/v1.0/users/"  + userID + "/revokeSignInSessions";
 			node.warn(url)
@@ -26,11 +31,11 @@ module.exports = function(RED) {
 					url: url,
 					headers: headers
 				});
-				node.warn(user_name + ' (id: ' + userID + ') Session was revoked');
+				node.warn(userName + ' (id: ' + userID + ') Session was revoked');
 				node.send(msg);
 
 			  } catch (error) {
-                    node.warn('!!!!!!!!!!!!!!!!!!!!' + user_name + ' (id: ' + userID + ') Session was NOT revoked');
+                    node.warn('!!!!!!!!!!!!!!!!!!!!' + userName + ' (id: ' + userID + ') Session was NOT revoked');
                     node.warn(error.message);
 			  }
 

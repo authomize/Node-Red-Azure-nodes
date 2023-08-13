@@ -25,7 +25,7 @@ module.exports = function(RED) {
 			  )
 
 			try {
-				var url = `https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`;
+				var url = 'https://graph.microsoft.com/v1.0/groups/' + groupId + '/members/$ref';
 				
 				const postData = {
 					"@odata.id": 'https://graph.microsoft.com/v1.0/directoryObjects/' + userId

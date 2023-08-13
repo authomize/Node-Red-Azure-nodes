@@ -5,6 +5,10 @@
         defaults: {
             name: {value: "Azure - Revoke Sign In Sessions"},
             auth: { type: 'azure_config', required: true },
+			userID: { value: '', required: true },
+            userIDType: {value: ''},
+			userName: { value: '', required: true },
+            userNameType: {value: ''},
         },
         inputs:1,
         outputs:1,
@@ -19,6 +23,20 @@
         <div class="form-row">
             <label for="node-input-auth"><i class="fa fa-cogs"></i> AzureAD Credentials</label>
             <input type="text" id="node-input-auth" placeholder="auth">
+        </div>
+		<div class="form-row">
+          <label for="node-input-userId">
+            <i class="fa fa-user"></i> User Id
+          </label>
+          <input type="text" id="node-input-userId" placeholder="Enter Azure AD user id">
+          <input type="hidden" id="node-input-userIdType" />
+        </div>
+		<div class="form-row">
+          <label for="node-input-userName">
+            <i class="fa fa-user"></i> User Name
+          </label>
+          <input type="text" id="node-input-userId" placeholder="Enter Azure AD user name">
+          <input type="hidden" id="node-input-userNameType" />
         </div>
 </script>
 
